@@ -18,7 +18,7 @@ In order to fetch the news articles, run the following example command:
 python automate.py --lower_date '10/28/2022' --upper_date '10/30/2022' --key_words 'NBA' 'Artificial Intelligence' 'Manchester United' --n_pages 1
 ```
 
-Running the script will save the fetched results to a headlines.xlsx' excel file in the current directory.
+Running the script will save the fetched results to a 'headlines.xlsx' excel file in the current directory.
 
 ## Command-line Options
 
