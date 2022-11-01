@@ -1,7 +1,17 @@
 import pandas as pd
+from typing import Dict, List
 
 
-def newsfeed(article_info, raw_dictionary):
+def newsfeed(article_info: pd.DataFrame, raw_dictionary: List[Dict]) -> pd.DataFrame:
+    """Fetching google search results and storing into DataFrame
+
+    Args:
+        article_info (pd.DataFrame): Empty DataFrame with columns
+        raw_dictionary (List[Dict]): Containing information for the search results
+
+    Returns:
+        pd.DataFrame : pandas DataFrame object containing article information
+    """
     for i in range(len(raw_dictionary)-1):
         if raw_dictionary is not None:
             # Fetch the date and time and convert it into datetime format
