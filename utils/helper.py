@@ -23,8 +23,9 @@ def newsfeed(article_info: pd.DataFrame, raw_dictionary: List[Dict]) -> pd.DataF
             articles = raw_dictionary[i]['desc']
             link = raw_dictionary[i]['link']
             # Append all the above information in a single dataframe
-            article_info = article_info.append({'Date': date, 'Time': time, 'Title': title,
-                                                'Articles': articles, 'Link': link}, ignore_index=True)
+            new_row = pd.DataFrame({'Date': date, 'Time': time, 'Title': title,
+                                    'Articles': articles, 'Link': link}, index=[0])
+            article_info = pd.concat([article_info, new_row], ignore_index=True)
         else:
             break
 

@@ -3,6 +3,15 @@ import numpy as np
 import argparse
 from GoogleNews import GoogleNews
 from utils.helper import newsfeed
+from transformers import pipeline
+
+# Load pre-trained model and tokenizer
+nlp_model = pipeline('sentiment-analysis')
+
+# Function to apply model to a piece of text
+def apply_model(article):
+    return nlp_model(article)[0]
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--lower_date',
@@ -51,7 +60,7 @@ for steps in range(len(key_words)):
         google_news.get_page(steps)
         feed = newsfeed(article_info, result)
 
-    articles = articles.append(feed)
+        articles = pd.concat([articles, feed], ignore_index=True)
 
     # Clear off the search results of previous keyword to avoid duplication
     google_news.clear()
@@ -60,5 +69,8 @@ shape = articles.shape[0]
 # Resetting the index of the final result
 articles.index = np.arange(shape)
 
+# Apply function to 'Articles' column
+articles['Sentiment'] = articles['Title'].apply(apply_model)
+
 # Saving fetched articles to excel sheet
-articles.to_excel('headline.xlsx')
+articles.to_csv('headline.csv', index=False)
