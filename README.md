@@ -30,3 +30,7 @@ You can customize the command-line options to get a specific date range, keyword
 --key_words (One or more key words to be searched)
 --n_pages (Number of pages to be fetched)
 ```
+
+## Sentiment Analysis
+
+A simple pipeline to analyze the sentiment of article titles is now included. This was achieved using the Transformers API https://huggingface.co/docs/transformers/index.
