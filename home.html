@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Article Summaries</title>
+</head>
+<body>
+    <h1>Article Summaries</h1>
+    <ul>
+        {% for article in articles %}
+        <li>
+            <h2>{{ article.Title }}</h2>
+            <p>{{ article.Summary }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

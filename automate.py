@@ -4,14 +4,27 @@ import argparse
 from GoogleNews import GoogleNews
 from utils.helper import newsfeed
 from transformers import pipeline
+import requests
+from bs4 import BeautifulSoup
 
 # Load pre-trained model and tokenizer
 nlp_model = pipeline('sentiment-analysis')
+summarizer = pipeline('summarization', model="Falconsai/text_summarization")
 
 # Function to apply model to a piece of text
 def apply_model(article):
     return nlp_model(article)[0]
 
+def summarize_article(url):
+    # Send a GET request to the URL
+    response = requests.get(url)
+    # Parse the HTML content of the page with BeautifulSoup
+    soup = BeautifulSoup(response.content, 'html.parser')
+    # Extract all the text from the page
+    article_text = ' '.join(map(lambda p: p.text, soup.find_all('p')))
+    # Apply the summarization model to the text
+    summary = summarizer(article_text, max_length=150, min_length=30, do_sample=False)[0]['summary_text']
+    return summary
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--lower_date',
@@ -71,6 +84,8 @@ articles.index = np.arange(shape)
 
 # Apply function to 'Articles' column
 articles['Sentiment'] = articles['Title'].apply(apply_model)
+articles['Summary'] = articles['Link'].apply(summarize_article)
+
 
 # Saving fetched articles to excel sheet
 articles.to_csv('headline.csv', index=False)
