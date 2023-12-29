@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Analysis</title>
+</head>
+<body>
+    <form method="POST">
+        <label for="url">Article URL:</label><br>
+        <input type="text" id="url" name="url"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <p>Summary: {{ summary }}</p>
+    <p>Sentiment: {{ sentiment }}</p>
+</body>
+</html>
